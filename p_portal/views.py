@@ -10,3 +10,9 @@ def patient_account_view(request):
 def patient_insurance_view(request):
     return render(request, "insurance_template.html", {})
 
+def patient_visits_view(request):
+    return render(request, "visits_template.html", {})
+
+def patient_billing_view(request):
+    return render(request, "billing_template.html", {})
+
