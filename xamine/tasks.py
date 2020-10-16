@@ -50,7 +50,7 @@ def send_notification(order_id):
 
         recipients = ord.team.technicians.values_list('email', flat=True)
 
-    # If level is 2, send to the radiologists from the order's assigned team
+    # If level is 3, send to the radiologists from the order's assigned team
     elif ord.level_id == 3:
         subject = f"Imaging Complete: {ord.patient.full_name}"
         body = f"Patient imaging has been completed and is ready for analysis."
