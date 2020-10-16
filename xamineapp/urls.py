@@ -24,4 +24,7 @@ urlpatterns = [
     path('', include('xamine.urls')),
     path('admin/', admin.site.urls),
     # url(r'^api-auth/', include('rest_framework.urls'))
+
+    # Group6 urls
+    path('patient_portal/', include('p_portal.urls'))
 ]
