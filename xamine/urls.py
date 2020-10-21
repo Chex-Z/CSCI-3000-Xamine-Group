@@ -3,8 +3,8 @@ from django.urls import path, include
 from xamine import views, apiviews
 
 urlpatterns = [
+    path('patientlogin,')
     path('', views.index, name='index'),  # view dashboard
-
     path('order/', views.public_order, name='public_order'),  # Patient viewing of orders
     path('order/<int:order_id>/', views.order, name='order'),  # Internal viewing and submitting of orders
     path('order/<int:order_id>/upload', views.upload_file, name='submit_image'),  # Uploading images for order

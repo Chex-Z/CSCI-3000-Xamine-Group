@@ -36,6 +36,7 @@ class PatientInfoForm(forms.ModelForm):
             'allergy_mridye': forms.Select(attrs={'class': 'form-control'}, choices=yesnoch),
             'allergy_latex': forms.Select(attrs={'class': 'form-control'}, choices=yesnoch),
             'notes': forms.Textarea(attrs={'class': 'form-control', 'autocomplete': 'off', 'rows': '3'}),
+            
         }
 
 
