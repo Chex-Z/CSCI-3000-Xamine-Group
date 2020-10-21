@@ -16,3 +16,6 @@ def patient_visits_view(request):
 def patient_billing_view(request):
     return render(request, "billing_template.html", {})
 
+def patient_login_view(request):
+    return render(request, "patient_login.html", {})
+

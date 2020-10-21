@@ -78,11 +78,11 @@
 <form method="post" class="form-signin">
     {% csrf_token %}
     <h1><i class="fas fa-x-ray"></i></h1>
-    <h1 class="h3 mb-3 font-weight-normal">Xamine RIS</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Xamine Patient</h1>
     {{ form|crispy }}
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <a href="/patient_portal"><button class="btn btn-lg btn-primary btn-block" type="button">Portal</button></a>
     <br>
-    <a href="/patient_portal/patient_login"><button class="btn btn-lg btn-primary btn-block" type="button">Patient Portal</button></a>
+    <a href="/login"><button class="btn btn-lg btn-primary btn-block" type="button">Xamine RIS</button></a>
 </form>
 
 
