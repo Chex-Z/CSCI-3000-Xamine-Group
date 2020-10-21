@@ -39,6 +39,7 @@ class Patient(models.Model):
     email_info = models.EmailField()
     birth_date = models.DateField(validators=[check_past_date])
     phone_number = models.CharField(max_length=32)
+    
 
     # Medical information
     allergy_asthma = models.BooleanField()
@@ -68,6 +69,7 @@ class ModalityOption(models.Model):
     """ List of available modality options """
 
     name = models.CharField(max_length=64)
+    price = models.FloatField(default=1000.00)
 
     def __str__(self):
         return self.name
@@ -162,3 +164,5 @@ def mymodel_delete(sender, instance, **kwargs):
 
     if instance.image:
         instance.image.delete(False)
+
+
