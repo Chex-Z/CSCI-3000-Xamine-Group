@@ -3,7 +3,6 @@ from django.urls import path, include
 from xamine import views, apiviews
 
 urlpatterns = [
-    path('patientlogin,')
     path('', views.index, name='index'),  # view dashboard
     path('order/', views.public_order, name='public_order'),  # Patient viewing of orders
     path('order/<int:order_id>/', views.order, name='order'),  # Internal viewing and submitting of orders
@@ -18,5 +17,4 @@ urlpatterns = [
     path('patient/<int:pat_id>/new-order', views.new_order, name='new_order'),  # Start new order for patient
 
     path('image/<int:img_id>/remove', views.remove_file, name='remove_image'),  # Remove specified image
-
 ]
