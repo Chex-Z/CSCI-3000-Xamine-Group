@@ -17,15 +17,4 @@ urlpatterns = [
     path('patient/<int:pat_id>/new-order', views.new_order, name='new_order'),  # Start new order for patient
 
     path('image/<int:img_id>/remove', views.remove_file, name='remove_image'),  # Remove specified image
-
-    # Group 6 urls
-    path("patient_portal/", views.patient_home_view, name="patient_home_view"),
-    path("patient_portal/patient_insurance", views.patient_insurance_view, name="patient_insurance_view"),
-    path("patient_portal/patient_account", views.patient_account_view, name="patient_account_view"),
-    path("patient_portal/patient_visits", views.patient_visits_view, name="patient_visits_view"),
-    path("patient_portal/patient_billing", views.patient_billing_view, name="patient_billing_view"),
-    path("patient_portal/patient_login", views.patient_login_view, name="patient_login"),
-
-    #Register
-    path("patient_portal/register", views.register, name="register"),
 ]
