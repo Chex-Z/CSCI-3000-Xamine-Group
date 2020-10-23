@@ -6,8 +6,22 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-Django = "*"
 xamine-env = "*"
+pylint = "*"
+autopep8 = "*"
+django-crispy-forms = "*"
+django-agenda = "*"
+djangorestframework = "*"
+django-filter = "*"
+django-bootstrap-datepicker-plus = "*"
+django-intl-tel-input = "*"
+django-sendgrid-v5 = "*"
+django-background-tasks = "*"
+django-extensions = "*"
+sendgrid = "*"
+django-cleanup = "*"
+Django = "*"
+Markdown = "*"
 
 [requires]
 python_version = "3.7"
