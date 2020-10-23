@@ -12,9 +12,17 @@ from xamine.forms import PatientInfoForm, ScheduleForm, TeamSelectionForm, Analy
 from xamine.utils import is_in_group, get_image_files
 from xamine.tasks import send_notification
 
+from django.http import HttpResponseRedirect
+
 
 @login_required
 def index(request):
+
+    """ Group6 redirect to patient portal if user belongs to Patient group  """
+
+    if is_in_group(request.user, "Patient"):
+        return HttpResponseRedirect("/patient_portal/")
+
     """ Displays dashboard tables, depending on group membership of logged in user. """
 
     # Determine if current user can see all sections
@@ -244,6 +252,7 @@ def order(request, order_id):
 
 @login_required
 def patient(request, pat_id=None):
+
     """ Displays the patient info and orders """
 
     # Grab patient from the database

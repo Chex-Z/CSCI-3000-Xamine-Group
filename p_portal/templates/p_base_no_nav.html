@@ -8,37 +8,6 @@
         background-color: #333;
         overflow: hidden;
       }
-
-      /* Style the links inside the navigation bar */
-      .topnav a {
-        float: left;
-        color: #f2f2f2;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        font-size: 18px;
-      }
-      
-      /* Style for 'logged in as' */
-      .topnav span {
-        float: right;
-        color: #f2f2f2;
-        padding: 14px 16px;
-        text-align: center;
-      }
-
-      /* Change the color of links on hover */
-      .topnav a:hover {
-        background-color: #ddd;
-        color: black;
-      }
-
-      /* Add a color to the active/current link */
-      .topnav a.active {
-        background-color: #4CAF50;
-        color: white;
-      }
-
       /* Style page content */
       .main {
         padding: 0px 10px;
@@ -56,17 +25,6 @@
 </head>
 
 <body>
-  <!-- Side navigation -->
-  <div class="topnav">
-    <a href="/patient_portal">Home</a>
-    <a href="/patient_portal/patient_account">Account</a>
-    <a href="/patient_portal/patient_visits">Visits</a>
-    <a href="/patient_portal/patient_billing">Billing</a>
-    <a href="/patient_portal/patient_insurance">Insurance</a>
-    <a href="{% url 'logout' %}">Logout</a>
-    <span class="navbar-text">Logged in as {{ user.get_username }}</span>
-  </div>
-
   <!-- Page content -->
   <div class="main">
     <div class="row justify-content-center">
