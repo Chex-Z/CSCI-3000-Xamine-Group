@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import RegisterForm
 
 # Create your views here.
 def patient_home_view(request):
@@ -18,4 +19,17 @@ def patient_billing_view(request):
 
 def patient_login_view(request):
     return render(request, "patient_login.html", {})
+
+#Register User 
+def register(response):
+    if response.method == "POST":
+        form = RegisterForm(response.POST)
+        if form.is_valid():
+            form.save()
+        
+        return redirect("/login")
+    else:
+        form = RegisterForm()    
+
+    return render(response, "register/register.html", {'form':form})    
 
