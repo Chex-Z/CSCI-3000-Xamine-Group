@@ -7,10 +7,6 @@ from xamine.models import Patient, Order, Image
 
 from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
 
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-
 yesnoch = (
     (False, 'No'),
     (True, 'Yes'),
@@ -118,13 +114,3 @@ class NewOrderForm(forms.ModelForm):
             'modality': forms.Select(attrs={'class': 'form-control'}),
             'notes': forms.Textarea(attrs={'class': 'form-control', 'autocomplete': 'off', 'rows': '3'}),
         }
-
-#Registration form
-class RegisterForm(UserCreationForm):
-    email = forms.EmailField()
-
-    class Meta:
-        model = User
-        fields = ["username", "email", "password1", "password2"]
-
-
