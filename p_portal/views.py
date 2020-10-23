@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
+from django.contrib.auth.models import Group
 
 # Create your views here.
 def patient_home_view(request):
@@ -20,14 +21,16 @@ def patient_billing_view(request):
 def patient_login_view(request):
     return render(request, "patient_login.html", {})
 
-#Register User 
+#Register User as Patient
 def register(response):
     if response.method == "POST":
         form = RegisterForm(response.POST)
         if form.is_valid():
-            form.save()
-        
-        return redirect("/login")
+            user = form.save()
+            user_group = Group.objects.get(name='Patient')         
+            user.groups.add(user_group)
+            
+            return redirect("/login")
     else:
         form = RegisterForm()    
 
