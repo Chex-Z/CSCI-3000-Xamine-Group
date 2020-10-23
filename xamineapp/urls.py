@@ -26,5 +26,5 @@ urlpatterns = [
     # url(r'^api-auth/', include('rest_framework.urls'))
 
     # Group6 urls
-    path('patient_portal/', include('p_portal.urls'))
+    # path('patient_portal/', include('p_portal.urls'))
 ]
