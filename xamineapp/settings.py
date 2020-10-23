@@ -52,9 +52,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_extensions',
     # 'django_cleanup.apps.CleanupConfig',
-
-    # Group6 apps
-    'p_portal',
 ]
 
 MIDDLEWARE = [
