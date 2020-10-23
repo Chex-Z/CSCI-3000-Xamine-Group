@@ -12,6 +12,9 @@ from xamine.forms import PatientInfoForm, ScheduleForm, TeamSelectionForm, Analy
 from xamine.utils import is_in_group, get_image_files
 from xamine.tasks import send_notification
 
+# Group 6 forms
+from .forms import RegisterForm
+
 
 @login_required
 def index(request):
@@ -460,3 +463,38 @@ def public_order(request):
 def show_message(request, headlines):
     """ Handles showing error messages """
     return render(request, 'message.html', headlines)
+
+
+# Group 6
+def patient_home_view(request):
+    return render(request, "patient_home_template.html", {})
+
+def patient_account_view(request):
+    return render(request, "account_template.html", {})
+
+def patient_insurance_view(request):
+    return render(request, "insurance_template.html", {})
+
+def patient_visits_view(request):
+    return render(request, "visits_template.html", {})
+
+def patient_billing_view(request):
+    return render(request, "billing_template.html", {})
+
+def patient_login_view(request):
+    return render(request, "patient_login.html", {})
+
+#Register User 
+def register(response):
+    if response.method == "POST":
+        form = RegisterForm(response.POST)
+        if form.is_valid():
+            user = form.save()
+            group = form.cleaned_data['group']        
+            group.user_set.add(user)
+        
+        return redirect("/login")
+    else:
+        form = RegisterForm()    
+
+    return render(response, "register/register.html", {'form':form})  
