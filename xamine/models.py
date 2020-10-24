@@ -31,12 +31,14 @@ class AppSetting(models.Model):
 
 class Patient(models.Model):
     """ Model to track the patient and their history """
+    # p-portal user
+    patient_user = models.ForeignKey(User, related_name='patient_user', on_delete=models.SET_NULL, null=True, blank=True)
 
-    # Personal information
+    # Personal information *** Group6: made email_info unique in order to link a patient to a patient_user
     first_name = models.CharField(max_length=128)
     middle_name = models.CharField(max_length=128, blank=True, null=True)
     last_name = models.CharField(max_length=128)
-    email_info = models.EmailField()
+    email_info = models.EmailField(unique=True)
     birth_date = models.DateField(validators=[check_past_date])
     phone_number = models.CharField(max_length=32)
     
@@ -49,7 +51,8 @@ class Patient(models.Model):
 
     notes = models.TextField(null=True, blank=True, max_length=1000)
 
-    doctor = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
+    """ added related_name='doctor """
+    doctor = models.ForeignKey(User, related_name='doctor', on_delete=models.DO_NOTHING, null=True)
 
     # Related fields:
     # -- orders = Order query set
