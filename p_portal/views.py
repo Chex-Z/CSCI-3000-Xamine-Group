@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
+from django.views.generic import DetailView
 
 from xamine.models import Patient
 
@@ -9,13 +10,21 @@ from .forms import RegisterForm
 
 # Create your views here.
 def patient_home_view(request):
-    print ('print statement: ', request.user.first_name)
-    p_user=Patient.objects.get(patient_user=request.user)
-    print ('print first and last name', p_user.first_name, p_user.last_name)
+    # p_user=Patient.objects.get(patient_user=request.user)
+    # print ('print statement: ', Patient.objects.get(patient_user=request.user).id)
     return render(request, "patient_home_template.html", {})
 
 def patient_account_view(request):
     return render(request, "account_template.html", {})
+
+# TODO delete or develop: testing CBV
+class PatientDetailView(DetailView):
+    template_name = 'patient_detail.html'
+    queryset = Patient.objects.all()
+
+    def get_object(self):
+        id_ = Patient.objects.get(patient_user=self.request.user).id
+        return get_object_or_404(Patient, id=id_)
 
 def patient_insurance_view(request):
     return render(request, "insurance_template.html", {})

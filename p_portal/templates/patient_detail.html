@@ -1,0 +1,48 @@
+{% extends 'portal_base.html' %}
+{% load phone_number %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+<div class="container">
+        <div class="row">
+            <div class="col-12">
+                <span class="display-4">
+                    Patient User Information
+                </span>
+                <a data-toggle="collapse" href=".patient-info" class="text-muted small ml-2 collapse show patient-info">
+                    Edit
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-12">
+                <div class="row collapse show patient-info">
+                    <div class="col-md-4 col-12 mt-1">
+                        <label>First Name:</label><br>
+                        {{ object.first_name }}
+                    </div>
+                    <div class="col-md-4 col-12 mt-1">
+                        <label>Middle Name:</label><br>
+                        {{ object.middle_name|default_if_none:'' }}
+                    </div>
+                    <div class="col-md-4 col-12 mt-1">
+                        <label>Last Name:</label><br>
+                        {{ object.last_name }}
+                    </div>
+                    <div class="col-md-4 col-12 mt-1">
+                        <label>Date of Birth:</label><br>
+                        {{ object.birth_date}}
+                    </div>
+                    <div class="col-md-4 col-12 mt-1">
+                        <label>Phone Number:</label><br>
+                        {{ object.phone_number|phone_number }}
+                    </div>
+                    <div class="col-md-4 col-12 mt-1">
+                        <label>Email:</label><br>
+                        {{ object.email_info }}
+                    </div>
+                </div><br>
+    <a href="/patient_portal"><button type="button" class="btn btn-primary">Link</button></a>
+    <a href="/patient_portal"><button type="button" class="btn btn-primary">Link</button></a>
+</div>
+{% endblock %}
