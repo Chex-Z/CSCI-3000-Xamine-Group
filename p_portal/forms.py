@@ -27,3 +27,15 @@ class RegisterForm(UserCreationForm):
             raise forms.ValidationError('This email is not recognized by our system')
 
         return data
+
+
+class PatientModelForm(forms.ModelForm):
+    class Meta:
+        model = Patient
+        fields =[
+            'phone_number',
+            'first_name',
+            'middle_name',
+            'last_name',
+            'phone_number',
+        ]

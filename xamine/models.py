@@ -42,6 +42,13 @@ class Patient(models.Model):
     birth_date = models.DateField(validators=[check_past_date])
     phone_number = models.CharField(max_length=32)
     
+    # Group6 address info
+    """
+    street = models.TextField()
+    city = models.TextField()
+    province = models.TextField()
+    code = models.TextField()
+    """
 
     # Medical information
     allergy_asthma = models.BooleanField()

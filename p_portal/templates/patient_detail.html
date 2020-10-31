@@ -1,4 +1,7 @@
 {% extends 'portal_base.html' %}
+{% block title %}
+Account
+{% endblock %}
 {% load phone_number %}
 {% load crispy_forms_filters %}
 
@@ -9,9 +12,6 @@
                 <span class="display-4">
                     Patient User Information
                 </span>
-                <a data-toggle="collapse" href=".patient-info" class="text-muted small ml-2 collapse show patient-info">
-                    Edit
-                </a>
             </div>
         </div>
         <div class="row">
@@ -42,7 +42,7 @@
                         {{ object.email_info }}
                     </div>
                 </div><br>
-    <a href="/patient_portal"><button type="button" class="btn btn-primary">Link</button></a>
-    <a href="/patient_portal"><button type="button" class="btn btn-primary">Link</button></a>
+    <a href="/patient_portal/detail/update"><button type="button" class="btn btn-primary">Update</button></a>
+    <a href="{% url 'change_password' %}"><button type="button" class="btn btn-primary">Change Password</button></a>
 </div>
 {% endblock %}

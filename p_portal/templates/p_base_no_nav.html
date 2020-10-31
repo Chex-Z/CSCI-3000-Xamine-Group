@@ -8,6 +8,43 @@
         background-color: #333;
         overflow: hidden;
       }
+        
+      input[type=button], input[type=submit], input[type=reset] {
+        background-color: #007bfa;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        padding: 10px 32px;
+        text-align: center;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+
+      button[type=button] {
+        background-color: #007bfa;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        padding: 10px 32px;
+        text-align: center;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+      
+      /*
+      input[type=button]:hover, input[type=submit]:hover {
+        background-color: ##0057ff;
+        color: white;
+      }
+
+      button[type=button]:hover {
+        background-color: ##0057ff;
+        color: white;
+      }
+      */
+
       /* Style page content */
       .main {
         padding: 0px 10px;
@@ -29,7 +66,9 @@
   <div class="main">
     <div class="row justify-content-center">
       <div class="col-8">
+        {% block heading %}
         <h1 class="mt-2">Patient Portal</h1>
+        {% endblock %}
         <hr class="mt-0 mb-4">
         {% block content %}
         {% endblock %}

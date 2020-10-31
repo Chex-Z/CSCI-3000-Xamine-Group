@@ -1,0 +1,16 @@
+{% extends 'p_base_no_nav.html' %}
+{% block title %}Update Info{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block heading %}
+    <h1 class="mt-2">Update Info</h1>
+{% endblock %}
+
+{% block content %}
+<form method="POST" action="">
+    {% csrf_token %}
+    {{form|crispy}}
+    <input type='submit' value='Save' />
+    <a href="/patient_portal/detail"><button type="button" class="btn btn-primary">Cancel</button></a>
+</form>
+{% endblock %}
