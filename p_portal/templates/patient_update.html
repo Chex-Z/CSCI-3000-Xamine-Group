@@ -11,6 +11,6 @@
     {% csrf_token %}
     {{form|crispy}}
     <input type='submit' value='Save' />
-    <a href="/patient_portal/detail"><button type="button" class="btn btn-primary">Cancel</button></a>
+    <a href="/patient_portal/detail"><input type='button' value='Cancel' /></a>
 </form>
 {% endblock %}
