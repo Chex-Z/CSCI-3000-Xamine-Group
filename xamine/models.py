@@ -11,6 +11,7 @@ from xamine.validators import validate_file_size, check_past_date
 class Level(models.Model):
     """ Model to define different points in order workflow """
     name = models.CharField(max_length=32)
+    price = models.FloatField(default=0.0)
 
     def __str__(self):
         return self.name
@@ -42,13 +43,6 @@ class Patient(models.Model):
     birth_date = models.DateField(validators=[check_past_date])
     phone_number = models.CharField(max_length=32)
     
-    # Group6 address info
-    """
-    street = models.TextField()
-    city = models.TextField()
-    province = models.TextField()
-    code = models.TextField()
-    """
 
     # Medical information
     allergy_asthma = models.BooleanField()
@@ -133,6 +127,9 @@ class Order(models.Model):
     # -- images: ImageAttachment query set
     # -- secret_keys: OrderKey query set
 
+    #Order Info
+    total = models.FloatField(default=0.0)
+
     # Return as string
     def __str__(self):
         return f"#{self.id} - {self.patient.full_name}"
@@ -176,3 +173,13 @@ def mymodel_delete(sender, instance, **kwargs):
         instance.image.delete(False)
 
 
+class Invoice(models.Model): 
+    """ Model info for Invoice model """
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, primary_key=True)
+    Patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+
+    """ Total Balance Due """
+    total = models.FloatField(default=0.0)
+
+    def __str__(self):
+        return f"Invoice for {self.order.id}"
