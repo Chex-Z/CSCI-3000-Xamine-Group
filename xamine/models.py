@@ -127,9 +127,6 @@ class Order(models.Model):
     # -- images: ImageAttachment query set
     # -- secret_keys: OrderKey query set
 
-    #Order Info
-    total = models.FloatField(default=0.0)
-
     # Return as string
     def __str__(self):
         return f"#{self.id} - {self.patient.full_name}"
@@ -176,10 +173,14 @@ def mymodel_delete(sender, instance, **kwargs):
 class Invoice(models.Model): 
     """ Model info for Invoice model """
     order = models.OneToOneField(Order, on_delete=models.CASCADE, primary_key=True)
-    Patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
 
     """ Total Balance Due """
     total = models.FloatField(default=0.0)
 
+    """ Determines if Invoice is displayed or not on invoice page """
+    isPaid = models.BooleanField(default=False)
+
+
     def __str__(self):
-        return f"Invoice for {self.order.id}"
+        return f"Invoice for {self.patient.full_name} , Order ID: {self.order.id}"

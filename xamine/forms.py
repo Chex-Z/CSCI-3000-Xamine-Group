@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 from intl_tel_input.widgets import IntlTelInputWidget
-from xamine.models import Patient, Order, Image
+from xamine.models import Patient, Order, Image, Invoice
 
 from bootstrap_datepicker_plus import DatePickerInput, DateTimePickerInput
 
@@ -114,3 +114,12 @@ class NewOrderForm(forms.ModelForm):
             'modality': forms.Select(attrs={'class': 'form-control'}),
             'notes': forms.Textarea(attrs={'class': 'form-control', 'autocomplete': 'off', 'rows': '3'}),
         }
+
+class NewInvoiceForm(forms.ModelForm):
+    """ Handles Creation """
+
+    class Meta:
+        model = Invoice
+        fields = ['order', 'patient', 'total']
+
+        
