@@ -38,4 +38,9 @@ class PatientModelForm(forms.ModelForm):
             'middle_name',
             'last_name',
             'phone_number',
+            'insurance',
+            'street',
+            'city',
+            'state',
+            'zip_code',
         ]

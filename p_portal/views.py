@@ -6,15 +6,32 @@ from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
 from django.views.generic import DetailView, UpdateView
 
-from xamine.models import Patient
+from xamine.models import Patient, Order
 
 from .forms import RegisterForm, PatientModelForm
 
 
 # Create your views here.
 def patient_home_view(request):
+    """
     # p_user=Patient.objects.get(patient_user=request.user)
     # print ('print statement: ', Patient.objects.get(patient_user=request.user).id)
+
+    # Grab active orders and completed orders from database
+    complete_orders = Order.objects.filter(level_id=4)
+
+    # If we are not an administrator, limit active and complete orders to
+    # the logged in users' patients.
+    if not see_all:
+        complete_orders = complete_orders.filter(patient__doctor=request.user)
+
+    # Add the orders we grabbed to our template context
+    context['complete_orders'] = complete_orders
+
+    # Add the patient lookup form to our context
+    context['patient_lookup'] = PatientLookupForm()
+    """
+
     return render(request, "patient_home_template.html", {})
     
 class PatientDetailView(DetailView):
@@ -46,9 +63,6 @@ def patient_visits_view(request):
 
 def patient_billing_view(request):
     return render(request, "billing_template.html", {})
-
-def patient_login_view(request):
-    return render(request, "patient_login.html", {})
 
 #Register User as Patient
 def register(response):
