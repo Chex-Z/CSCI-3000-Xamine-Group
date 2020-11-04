@@ -11,6 +11,7 @@ from xamine.validators import validate_file_size, check_past_date
 class Level(models.Model):
     """ Model to define different points in order workflow """
     name = models.CharField(max_length=32)
+    price = models.FloatField(default=0.0)
 
     def __str__(self):
         return self.name
@@ -42,6 +43,7 @@ class Patient(models.Model):
     birth_date = models.DateField(validators=[check_past_date])
     phone_number = models.CharField(max_length=32)
     
+<<<<<<< HEAD
     # Group6 address  & insurance info
     street = models.CharField(max_length=128, null=True, blank=True)
     city = models.CharField(max_length=128, null=True, blank=True)
@@ -49,6 +51,8 @@ class Patient(models.Model):
     zip_code = models.CharField(max_length=128, null=True, blank=True)
     insurance = models.BooleanField(default=False)
 
+=======
+>>>>>>> c7e3fb3026e9995395819088965ac7600aed118f
 
     # Medical information
     allergy_asthma = models.BooleanField()
@@ -176,3 +180,17 @@ def mymodel_delete(sender, instance, **kwargs):
         instance.image.delete(False)
 
 
+class Invoice(models.Model): 
+    """ Model info for Invoice model """
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, primary_key=True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+
+    """ Total Balance Due """
+    total = models.FloatField(default=0.0)
+
+    """ Determines if Invoice is displayed or not on invoice page """
+    isPaid = models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return f"Invoice for {self.patient.full_name} , Order ID: {self.order.id}"

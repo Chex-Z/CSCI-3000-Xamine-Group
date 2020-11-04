@@ -5,10 +5,10 @@ from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 
-from xamine.models import Order, Patient, Image, OrderKey
+from xamine.models import Order, Patient, Image, OrderKey, Invoice
 from xamine.forms import ImageUploadForm
 from xamine.forms import NewOrderForm, PatientLookupForm
-from xamine.forms import PatientInfoForm, ScheduleForm, TeamSelectionForm, AnalysisForm
+from xamine.forms import PatientInfoForm, ScheduleForm, TeamSelectionForm, AnalysisForm, NewInvoiceForm
 from xamine.utils import is_in_group, get_image_files
 from xamine.tasks import send_notification
 
@@ -91,8 +91,16 @@ def save_order(request, order_id):
             if request.user in cur_order.team.radiologists.all():
                 # Set up form with our data and save if valid
                 form = AnalysisForm(data=request.POST, instance=cur_order)
+                form2 = NewInvoiceForm(data=request.POST, instance=cur_order)
+            
                 if form.is_valid():
                     form.save()
+                    #Shit broken here, son
+                   # order = Order.objects.get(pk=order_id)
+                   # patient = Order.objects.get(patient=cur_order.patient)
+                   # form2.patient = patient
+                  # form2.order = order
+                   # form2 = Invoice.ceate(order, patient)
 
     # Always redirect to specified order
     return redirect('order', order_id=order_id)
@@ -402,6 +410,7 @@ def new_order(request, pat_id):
         # Set up form with our copied data
         new_form = NewOrderForm(data=form_data)
 
+        
         # Check validity. If valid, save order and set workflow. Otherwise, reload page with errors.
         if new_form.is_valid():
             new_order = new_form.save()
