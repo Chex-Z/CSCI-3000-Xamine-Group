@@ -10,7 +10,7 @@ from xamine.models import Patient, Order
 
 from .forms import RegisterForm, PatientModelForm
 
-
+#source control test
 # Create your views here.
 def patient_home_view(request):
     """
