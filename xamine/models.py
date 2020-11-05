@@ -43,7 +43,6 @@ class Patient(models.Model):
     birth_date = models.DateField(validators=[check_past_date])
     phone_number = models.CharField(max_length=32)
     
-<<<<<<< HEAD
     # Group6 address  & insurance info
     street = models.CharField(max_length=128, null=True, blank=True)
     city = models.CharField(max_length=128, null=True, blank=True)
@@ -51,8 +50,6 @@ class Patient(models.Model):
     zip_code = models.CharField(max_length=128, null=True, blank=True)
     insurance = models.BooleanField(default=False)
 
-=======
->>>>>>> c7e3fb3026e9995395819088965ac7600aed118f
 
     # Medical information
     allergy_asthma = models.BooleanField()
