@@ -6,16 +6,33 @@ from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
 from django.views.generic import DetailView, UpdateView
 
-from xamine.models import Patient
+from xamine.models import Patient, Order
 
 from .forms import RegisterForm, PatientModelForm
 
 
 # Create your views here.
 def patient_home_view(request):
-    # p_user=Patient.objects.get(patient_user=request.user)
-    # print ('print statement: ', Patient.objects.get(patient_user=request.user).id)
-    return render(request, "patient_home_template.html", {})
+    """ get patient user and patient user oder set """
+    p_user=Patient.objects.get(patient_user=request.user)
+    p_orders=Order.objects.filter(patient=p_user)
+
+    # Set up empty context to pass to template
+    context = {}
+
+    """ upcoming appointments """
+    upcoming_orders = Order.objects.filter(level_id=1, appointment__isnull=False).order_by('appointment')
+
+    """ orders """
+    complete_orders = p_orders.filter(level_id=4).order_by('completed_time')
+    active_orders = p_orders.filter(level_id__lt=4)
+
+    # context['active_orders'] = active_orders
+    context['complete_orders'] = complete_orders
+    context['active_orders'] = active_orders
+    context['upcoming_orders'] = upcoming_orders
+
+    return render(request, "patient_home_template.html", context)
     
 class PatientDetailView(DetailView):
     template_name = 'patient_detail.html'
@@ -46,9 +63,6 @@ def patient_visits_view(request):
 
 def patient_billing_view(request):
     return render(request, "billing_template.html", {})
-
-def patient_login_view(request):
-    return render(request, "patient_login.html", {})
 
 #Register User as Patient
 def register(response):
