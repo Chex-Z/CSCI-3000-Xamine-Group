@@ -10,29 +10,29 @@ from xamine.models import Patient, Order
 
 from .forms import RegisterForm, PatientModelForm
 
-#source control test
+
 # Create your views here.
 def patient_home_view(request):
-    """
-    # p_user=Patient.objects.get(patient_user=request.user)
-    # print ('print statement: ', Patient.objects.get(patient_user=request.user).id)
+    """ get patient user and patient user oder set """
+    p_user=Patient.objects.get(patient_user=request.user)
+    p_orders=Order.objects.filter(patient=p_user)
 
-    # Grab active orders and completed orders from database
-    complete_orders = Order.objects.filter(level_id=4)
+    # Set up empty context to pass to template
+    context = {}
 
-    # If we are not an administrator, limit active and complete orders to
-    # the logged in users' patients.
-    if not see_all:
-        complete_orders = complete_orders.filter(patient__doctor=request.user)
+    """ upcoming appointments """
+    upcoming_orders = Order.objects.filter(level_id=1, appointment__isnull=False).order_by('appointment')
 
-    # Add the orders we grabbed to our template context
+    """ orders """
+    complete_orders = p_orders.filter(level_id=4).order_by('completed_time')
+    active_orders = p_orders.filter(level_id__lt=4)
+
+    # context['active_orders'] = active_orders
     context['complete_orders'] = complete_orders
+    context['active_orders'] = active_orders
+    context['upcoming_orders'] = upcoming_orders
 
-    # Add the patient lookup form to our context
-    context['patient_lookup'] = PatientLookupForm()
-    """
-
-    return render(request, "patient_home_template.html", {})
+    return render(request, "patient_home_template.html", context)
     
 class PatientDetailView(DetailView):
     template_name = 'patient_detail.html'
