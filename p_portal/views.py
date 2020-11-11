@@ -6,7 +6,7 @@ from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
 from django.views.generic import DetailView, UpdateView
 
-from xamine.models import Patient, Order
+from xamine.models import Patient, Order, Invoice
 
 from .forms import RegisterForm, PatientModelForm
 
@@ -62,7 +62,23 @@ def patient_visits_view(request):
     return render(request, "visits_template.html", {})
 
 def patient_billing_view(request):
-    return render(request, "billing_template.html", {})
+    """ get patient user and patient user oder set """
+    p_user=Patient.objects.get(patient_user=request.user)
+    #p_orders=Order.objects.filter(patient=p_user)
+    P_invoice=Invoice.objects.filter(patient=p_user)
+
+    # Set up empty context to pass to template
+    context = {}
+
+    """ Current Invoices """
+    current_invoices = P_invoice.filter(isPaid=False).order_by('order_id')
+   
+
+
+    # context['invoices'] = all invoices
+    context['invoices'] = current_invoices
+    
+    return render(request, "billing_template.html", context)
 
 #Register User as Patient
 def register(response):

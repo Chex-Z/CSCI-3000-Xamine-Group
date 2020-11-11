@@ -21,16 +21,14 @@ Billing
                             </tr>
                             </thead>
                             <tbody>
-                            {% for invoices in active_orders %}
+                            {% for invoice in invoices %}
                                 <tr>
-                                    <td>{{ order.id }}</td>
-                                    <td>{{ order.invoice. }}</td>
+                                    <td>{{ invoice.order.id }}</td>
+                                    <td>$ {{ invoice.price }}</td>
                                    
                                 </tr>
                             {% empty %}
                             {% endfor %}
-                            <td class="{% cycle object %}">...</td>
-    <td class="{{ object }}">...</td>
                             </tbody>
                         </table>
             
