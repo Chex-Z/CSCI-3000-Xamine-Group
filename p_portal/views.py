@@ -6,9 +6,9 @@ from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
 from django.views.generic import DetailView, UpdateView
 
-from xamine.models import Patient, Order, Invoice
+from xamine.models import Patient, Order, Payment
 
-from .forms import RegisterForm, PatientModelForm
+from .forms import RegisterForm, PatientModelForm, PaymentForm
 
 
 # Create your views here.
@@ -62,22 +62,8 @@ def patient_visits_view(request):
     return render(request, "visits_template.html", {})
 
 def patient_billing_view(request):
-    """ get patient user and patient user oder set """
-    p_user=Patient.objects.get(patient_user=request.user)
-    #p_orders=Order.objects.filter(patient=p_user)
-    P_invoice=Invoice.objects.filter(patient=p_user)
-
     # Set up empty context to pass to template
     context = {}
-
-    """ Current Invoices """
-    current_invoices = P_invoice.filter(isPaid=False).order_by('order_id')
-   
-
-
-    # context['invoices'] = all invoices
-    context['invoices'] = current_invoices
-    
     return render(request, "billing_template.html", context)
 
 #Register User as Patient
@@ -123,3 +109,14 @@ def change_password(request):
     return render(request, 'change_password.html', {
         'form': form
     })
+
+def add_card(request):
+    print("current user:" , request.user)
+    if request.method == 'POST':
+        form = PaymentForm(request.POST, instance = Payment(patient_user = request.user))
+        if form.is_valid():
+            form.save()
+            return redirect('/patient_portal/patient_billing')
+    else:
+        form = PaymentForm()  
+    return render(request, 'add_card.html', {'form':form})

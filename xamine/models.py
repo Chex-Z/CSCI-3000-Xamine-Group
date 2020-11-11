@@ -6,6 +6,7 @@ from django.dispatch.dispatcher import receiver
 
 
 from xamine.validators import validate_file_size, check_past_date
+from creditcards.models import CardNumberField, CardExpiryField, SecurityCodeField
 
 
 class Level(models.Model):
@@ -191,3 +192,14 @@ class Invoice(models.Model):
 
     def __str__(self):
         return f"Invoice for {self.patient.full_name} , Order ID: {self.order.id}"
+
+class Payment(models.Model):
+    patient_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    cc_number = CardNumberField('card number')
+    cc_expiry = CardExpiryField('expiration date')
+    cc_code = SecurityCodeField('security code')
+
+    def __str__(self):
+        return f"Credit card for {self.patient_user}"
+
+

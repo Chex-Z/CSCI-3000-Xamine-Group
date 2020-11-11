@@ -12,3 +12,4 @@ django-background-tasks
 django-extensions
 sendgrid
 django-cleanup
+django-credit-cards
