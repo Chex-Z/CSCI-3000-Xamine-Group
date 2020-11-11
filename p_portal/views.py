@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.http import Http404
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
 from django.views.generic import DetailView, UpdateView
 
-from xamine.models import Patient, Order
+from xamine.models import Patient, Order, Invoice
 
 from .forms import RegisterForm, PatientModelForm
 
@@ -29,7 +30,6 @@ def patient_home_view(request):
 
     # context['active_orders'] = active_orders
     context['complete_orders'] = complete_orders
-    context['active_orders'] = active_orders
     context['upcoming_orders'] = upcoming_orders
 
     return render(request, "patient_home_template.html", context)
@@ -62,7 +62,33 @@ def patient_visits_view(request):
     return render(request, "visits_template.html", {})
 
 def patient_billing_view(request):
-    return render(request, "billing_template.html", {})
+
+    context = {}
+    """
+    p_user=Patient.objects.get(patient_user=request.user)
+    P_invoice=Invoice.objects.filter(patient=p_user)
+    print('P_invoice = ', Invoice.objects.filter(patient=p_user))
+
+    current_invoices = P_invoice.filter(isPaid=False).order_by('order_id')
+    print('current invoices = ', P_invoice.filter(isPaid=False).order_by('order_id'))
+    context['invoices'] = current_invoices
+    """
+    return render(request, "billing_template.html", context)
+
+def cancel_order(request, order_id):
+    try:
+        cur_order = Order.objects.get(pk=order_id)
+    except Order.DoesNotExist:
+        raise Http404
+
+    context = {}
+    context['this_order'] = cur_order
+
+    if request.method == 'POST':
+	    cur_order.delete()
+	    return redirect('/..')
+
+    return render(request, 'cancel_order.html', context)
 
 #Register User as Patient
 def register(response):

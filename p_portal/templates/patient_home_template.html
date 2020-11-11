@@ -29,7 +29,7 @@ Home
                 <td>{{ order.modality }}</td>
                 <td>{{ order.patient.doctor }}</td>
                 <td>{{ order.appointment|date:'M d - P' }}</td>
-                <td><a href="/patient_portal/patient_visits"><input type='button' value='Reschedule' /></a></td>
+                <td><a href="{% url 'cancel_order' order_id=order.id %}"><input type='button' value='Cancel' onclick="clicked(event)" /></a></td>
             </tr>
         {% empty %}
             <tr>
@@ -61,41 +61,6 @@ Home
         </thead>
         <tbody>
         {% for order in complete_orders %}
-            <tr>
-                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
-                <td>{{ order.modality }}</td>
-                <td>{{ order.last_edit|date:'M d' }}</td>
-            </tr>
-        {% empty %}
-            <tr>
-                <td colspan="3" class="text-center text-muted">
-                    No orders
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <div><hr class="solid"></div>
-</div>
-<br>
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <span class="display-4">
-                <h4>Pending Orders</h4>
-            </span>
-        </div>
-    </div>
-    <table class="table table-sm">
-        <thead>
-        <tr>
-            <th>Order #</th>
-            <th>Procedure</th>
-            <th>Completed</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for order in active_orders %}
             <tr>
                 <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
                 <td>{{ order.modality }}</td>
