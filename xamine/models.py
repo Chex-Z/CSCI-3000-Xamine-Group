@@ -49,7 +49,6 @@ class Patient(models.Model):
     city = models.CharField(max_length=128, null=True, blank=True)
     state = models.CharField(max_length=128, null=True, blank=True)
     zip_code = models.CharField(max_length=128, null=True, blank=True)
-    insurance = models.BooleanField(default=False)
 
 
     # Medical information

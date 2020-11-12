@@ -70,17 +70,6 @@ Account
                     {{ object.zip_code|default_if_none:''}}
                 </div>
             </div><br>
-            <div><hr class="solid"></div>
-    <div class="row">
-        <div class="col-12">
-            <span class="display-8">
-                <div class="col-md-4 col-12 mt-1">
-                    <label><h5>Insurance:</h5></label>
-                    {{ object.insurance|yesno:"yes,no,maybe" }}
-                </div>
-            </span>
-        </div>
-    </div>
     <a href="/patient_portal/detail/update"><button type="button" class="btn btn-primary">Update</button></a>
     <a href="{% url 'change_password' %}"><button type="button" class="btn btn-primary">Change Password</button></a>
 </div> 

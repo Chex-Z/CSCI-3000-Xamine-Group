@@ -5,11 +5,11 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, UpdateView, CreateView
 
-from xamine.models import Patient, Order, Payment
-
-from .forms import RegisterForm, PatientModelForm, PaymentForm
+from xamine.models import Patient, Order, Payment, Invoice
+from .models import Insurance
+from .forms import RegisterForm, PatientModelForm, PaymentForm, InsuranceModelForm
 
 
 # Create your views here.
@@ -34,6 +34,7 @@ def patient_home_view(request):
 
     return render(request, "patient_home_template.html", context)
     
+# Display patient info on Account tab
 class PatientDetailView(DetailView):
     template_name = 'patient_detail.html'
     queryset = Patient.objects.all()
@@ -42,6 +43,7 @@ class PatientDetailView(DetailView):
         id_ = Patient.objects.get(patient_user=self.request.user).id
         return get_object_or_404(Patient, id=id_)
 
+# Change account info in account tab
 class PatientUpdateView(UpdateView):
     template_name = 'patient_update.html'
     form_class = PatientModelForm
@@ -55,46 +57,64 @@ class PatientUpdateView(UpdateView):
         print(form.cleaned_data)
         return super().form_valid(form)
 
-def patient_insurance_view(request):
-    return render(request, "insurance_template.html", {})
+# insurance detail information
+def insurance_view(request):
+    # provides context for what to show on insurance_detail.html
+    insurance_exists = Insurance.objects.filter(insurance_user=request.user).exists()
+
+    context = { 'insurance_exists': insurance_exists}
+
+    # if the user does no thave any insurance then there is no instance to grab
+    if insurance_exists:
+        patient_insurance = Insurance.objects.get(insurance_user=request.user)
+        context['object'] = patient_insurance
+
+    return render(request, "insurance_detail.html",context)
+
+# Create an insurance instance for the user if none exists
+class InsuranceCreateView(CreateView):
+    template_name = 'insurance_create.html'
+    form_class = InsuranceModelForm
+    queryset = Insurance.objects.all()
+    success_url = '/patient_portal/insurance'
+
+    # in addition to creating the insurance instance the user is added to foreign key
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        this_instance = form.save()
+
+        this_instance.insurance_user = self.request.user
+
+        this_instance.save(update_fields=['insurance_user'])
+        return super().form_valid(form)
+
+# Change insurance info in insurance tab
+class InsuranceUpdateView(UpdateView):
+    template_name = 'insurance_update.html'
+    form_class = InsuranceModelForm
+    success_url = '/patient_portal/insurance'
+
+    def get_object(self):
+        id_ = Insurance.objects.get(insurance_user=self.request.user).id
+        return get_object_or_404(Insurance, id=id_)
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)
 
 def patient_visits_view(request):
     return render(request, "visits_template.html", {})
 
 def patient_billing_view(request):
-<<<<<<< HEAD
-
-    context = {}
-    """
+    """ get patient user and patient user oder set """
     p_user=Patient.objects.get(patient_user=request.user)
-    P_invoice=Invoice.objects.filter(patient=p_user)
-    print('P_invoice = ', Invoice.objects.filter(patient=p_user))
-
-    current_invoices = P_invoice.filter(isPaid=False).order_by('order_id')
-    print('current invoices = ', P_invoice.filter(isPaid=False).order_by('order_id'))
-    context['invoices'] = current_invoices
-    """
-    return render(request, "billing_template.html", context)
-
-def cancel_order(request, order_id):
-    try:
-        cur_order = Order.objects.get(pk=order_id)
-    except Order.DoesNotExist:
-        raise Http404
-
-    context = {}
-    context['this_order'] = cur_order
-
-    if request.method == 'POST':
-	    cur_order.delete()
-	    return redirect('/..')
-
-    return render(request, 'cancel_order.html', context)
-=======
+    p_invoice=Invoice.objects.filter(patient=p_user)
     # Set up empty context to pass to template
     context = {}
+
+    current_invoices = p_invoice.filter(isPaid=False).order_by('order_id')
+    context['invoices'] = current_invoices
     return render(request, "billing_template.html", context)
->>>>>>> 5be2b04301bdd8176b935e43cb1248dad4da6eaa
 
 #Register User as Patient
 def register(response):
@@ -150,3 +170,30 @@ def add_card(request):
     else:
         form = PaymentForm()  
     return render(request, 'add_card.html', {'form':form})
+
+def cancel_order(request, order_id):
+    try:
+        cur_order = Order.objects.get(pk=order_id)
+    except Order.DoesNotExist:
+        raise Http404
+
+    context = {
+        'this_order': cur_order
+    }
+    
+    if request.method == 'POST':
+	    cur_order.delete()
+	    return redirect('/..')
+    return render(request, 'cancel_order.html', context)
+
+def remove_insurance(request):
+    cur_insurance = Insurance.objects.get(insurance_user=request.user)
+
+    context = {
+        'this_insurance': cur_insurance
+    }
+    
+    if request.method == 'POST':
+	    cur_insurance.delete()
+	    return redirect('/patient_portal/insurance')
+    return render(request, 'remove_insurance.html', context)

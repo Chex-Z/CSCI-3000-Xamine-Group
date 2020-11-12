@@ -1,5 +1,5 @@
 {% extends 'p_base_no_nav.html' %}
-{% block title %}Cancel Appointment{% endblock %}
+{% block title %}Remove Insurance{% endblock %}
 {% load crispy_forms_tags %}
 
 {% block heading %}
@@ -9,7 +9,7 @@
 {% block content %}
 <form method="post" action="">
    {% csrf_token %}
-     <h1>Are you sure you want to cancel your appointment for {{ this_order.appointment|date:'M d' }} at {{ this_order.appointment|date:'P' }}?</h1><br>
+     <h1>Are you sure you want to remove your current insurance?</h1><br>
      <input class="btn btn-danger" type="submit" value="Yes" />
      <a href="/.."><div class="btn btn-primary">Cancel</div></a>
 </form>

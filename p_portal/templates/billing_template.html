@@ -8,12 +8,10 @@ Billing
 
 
 {% block content %}
-<a href="{% url 'add_card' %}"><button type="button" class="btn btn-primary">Add Credit Card</button></a>
 <div class="container">
     <span class="display-4">
                     Order Invoices
                 </span>
-
                 <table class="table table-sm">
                             <thead>
                             <tr>
@@ -25,13 +23,14 @@ Billing
                             {% for invoice in invoices %}
                                 <tr>
                                     <td>{{ invoice.order.id }}</td>
-                                    <td>$ {{ invoice.price }}</td>
+                                    <td>${{ invoice.total|floatformat:2 }}</td>
                                    
                                 </tr>
                             {% empty %}
                             {% endfor %}
                             </tbody>
-                        </table>
-            
-</div> 
+                        </table><br>
+<a href="{% url 'add_card' %}"><button type="button" class="btn btn-primary">Add Credit Card</button></a>            
+</div>
+
 {% endblock %}
