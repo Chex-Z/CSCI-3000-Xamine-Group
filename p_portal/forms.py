@@ -64,3 +64,12 @@ class PaymentForm(forms.Form):
     cc_expiry = CardExpiryField(label='Expiration Date')
     cc_code = SecurityCodeField(label='CVV/CVC')
     #amount = forms.IntegerField(label='Total')
+class PaymentForm(forms.ModelForm):
+    class Meta:
+        model = Payment
+        fields = [
+            'cc_number',
+            'cc_expiry',
+            'cc_code',
+        ]
+        
