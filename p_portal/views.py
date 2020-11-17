@@ -5,6 +5,8 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
+from django.views.generic import DetailView, UpdateView
+from django.core.mail import send_mail
 from django.views.generic import DetailView, UpdateView, CreateView
 
 from xamine.models import Patient, Order, Payment, Invoice
@@ -104,6 +106,42 @@ class InsuranceUpdateView(UpdateView):
 
 def patient_visits_view(request):
     return render(request, "visits_template.html", {})
+
+#for patient visits
+#grabs appointment info
+def appointment(request):
+    if request.method == "POST":
+        your_name = request.POST['your-name']
+        your_phone = request.POST['your-phone']
+        your_email = request.POST['your-email']
+        your_address = request.POST['your-address']
+        your_date = request.POST['your-date']
+        your_schedule = request.POST['your-schedule']
+        your_message = request.POST['your-message']
+
+    
+        #send email to receptionist 
+        appointment = "Name: " + your_name + " Phone: " + your_phone + " Email: " + your_email + " Address: " + your_address + " Requested Date: " + your_date + " Requested Time: " + your_schedule + " Message: " + your_message
+        
+        send_mail(
+            'Appointment Request', # subject
+            appointment, # message
+            your_email, #from email
+            ['ris.system.scheduling@gmail.com'] # email being sent to
+        )
+        #return values
+        return render(request, 'appointment.html', {
+            'your_name': your_name,
+            'your_phone': your_phone,
+            'your_email': your_email,
+            'your_address': your_address,
+            'your_date': your_date,
+            'your_schedule': your_schedule,
+            'your_message': your_message
+        })
+    
+    else:
+        return render(request, 'visits_template.html', {})
 
 def patient_billing_view(request):
     """ get patient user and patient user oder set """

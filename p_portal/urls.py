@@ -16,6 +16,8 @@ path("detail", views.PatientDetailView.as_view(), name="patient_account_view"),
 path("detail/update", views.PatientUpdateView.as_view(), name="patient_update_view"),
 path("patient_visits", views.patient_visits_view, name="patient_visits_view"),
 path("patient_billing", views.patient_billing_view, name="patient_billing_view"),
+path("patient_login", views.patient_login_view, name="patient_login"),
+path("appointment", views.appointment, name="appointment"),
 path('cancel_order/<int:order_id>/', views.cancel_order, name='cancel_order'),
 
 #Register

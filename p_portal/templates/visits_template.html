@@ -6,4 +6,91 @@ Visits
 
 {% block content %}
 <h3>Patient Visits</h3>
+<!--make the page a form to fill out-->
+<section class = "book-an-appointment-area 
+section-padding-100 bg-img bg-gradient-overlay
+jarallax clearfix" >
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="section-heading text-center black">
+                <h2>Book an Appointment</h2>
+                <div class="line"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Appointment form-->
+<div class="row">
+    <div class="col-12">
+        <div class="appointment-form">
+            <form action="{% url 'appointment' %}" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-30">
+                            <input type="text" name="your-name"
+                            class="form-control" placeholder="Your Name" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-30">
+                            <input type="text" name="your-phone"
+                            class="form-control" placeholder="Your Phone" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-30">
+                            <input type="email" name="your-email"
+                            class="form-control" placeholder="Your Email" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-30">
+                            <input type="text" name="your-address"
+                            class="form-control" placeholder="Your Address" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-30">
+                            <select name="your-date" class="form-control">
+                                <option value="Choose A Day Of The Week">Choose A Day Of The Week</option>
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                                <option value="Friday">Friday</option>
+                                <option value="Saturday">Saturday</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-30">
+                            <select name="your-schedule" class="form-control">
+                                <option value="Choose An Appointment Time">Choose An Appointment Time</option>
+                                <option value="9 AM to 10 AM">9 AM to 10 AM</option>
+                                <option value="10 AM to 11 AM">10 AM to 11 AM</option>
+                                <option value="11 AM to 12 PM">11 AM to 12 PM</option>
+                                <option value="2 PM to 3 PM">2 PM to 3 PM</option>
+                                <option value="3 PM to 4 PM">3 PM to 4 PM</option>
+                                <option value="4 PM to 5 PM">4 PM to 5 PM</option>
+                                <option value="5 PM to 6 PM">5 PM to 6 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group mb-30">
+                            <textarea name="your-message" class="form-control" placeholder="Your Message"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn dento-btn">Book Now</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</section>
+
 {% endblock %}
