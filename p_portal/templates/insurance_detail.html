@@ -1,0 +1,57 @@
+{% extends 'portal_base.html' %}
+{% block title %}
+Insurance
+{% endblock %}
+{% load phone_number %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+{% if insurance_exists %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <span class="display-4">
+                Insurance Information
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-12">
+            <div class="row collapse show patient-info">
+                <div class="col-md-4 col-12 mt-1">
+                    <label>Insurance:</label><br>
+                    {{ object.company_name }}
+                </div>
+                <div class="col-md-4 col-12 mt-1">
+                    <label>Account Holder:</label><br>
+                    {{ object.account_holder }}
+                </div>
+                <div class="col-md-4 col-12 mt-1">
+                    <label>Group #:</label><br>
+                    {{ object.group_number }}
+                </div>
+                <div class="col-md-4 col-12 mt-1">
+                    <label>Account #:</label><br>
+                    {{ object.account_number}}
+                </div>
+                <div class="col-md-4 col-12 mt-1">
+                    <label>Contact Number:</label><br>
+                    {{ object.contact_number|phone_number }}
+                </div>
+                <div class="col-md-4 col-12 mt-1">
+                    <label>Coverage:</label><br>
+                    {{ object.coverage }}
+                </div>
+            </div><br>
+        <div><hr class="solid"></div>
+        <div>
+            <a href="/patient_portal/insurance/update"><button type="button" class="btn btn-primary">Update</button></a>
+            <a href="/patient_portal/insurance/remove"><button type="button" class="btn btn-primary">Remove</button></a>
+        </div>
+    </div><br>
+</div> 
+{% else %}
+<div><h4>No Insurance is associated with this account</h4></div><br>
+<a href="/patient_portal/insurance/add"><button type="button" class="btn btn-primary">Add Insurance</button></a>
+{% endif %}
+{% endblock %}

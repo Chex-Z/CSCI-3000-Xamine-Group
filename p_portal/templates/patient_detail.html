@@ -7,41 +7,69 @@ Account
 
 {% block content %}
 <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <span class="display-4">
-                    Patient User Information
-                </span>
-            </div>
+    <div class="row">
+        <div class="col-12">
+            <span class="display-4">
+                Patient User Information
+            </span>
         </div>
-        <div class="row">
-            <div class="col-md-8 col-12">
-                <div class="row collapse show patient-info">
-                    <div class="col-md-4 col-12 mt-1">
-                        <label>First Name:</label><br>
-                        {{ object.first_name }}
-                    </div>
-                    <div class="col-md-4 col-12 mt-1">
-                        <label>Middle Name:</label><br>
-                        {{ object.middle_name|default_if_none:'' }}
-                    </div>
-                    <div class="col-md-4 col-12 mt-1">
-                        <label>Last Name:</label><br>
-                        {{ object.last_name }}
-                    </div>
-                    <div class="col-md-4 col-12 mt-1">
-                        <label>Date of Birth:</label><br>
-                        {{ object.birth_date}}
-                    </div>
-                    <div class="col-md-4 col-12 mt-1">
-                        <label>Phone Number:</label><br>
-                        {{ object.phone_number|phone_number }}
-                    </div>
-                    <div class="col-md-4 col-12 mt-1">
-                        <label>Email:</label><br>
-                        {{ object.email_info }}
-                    </div>
-                </div><br>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-12">
+            <div class="row collapse show patient-info">
+                <div class="col-md-4 col-12 mt-1">
+                    <label>First Name:</label><br>
+                    {{ object.first_name }}
+                </div>
+                <div class="col-md-4 col-12 mt-1">
+                    <label>Middle Name:</label><br>
+                    {{ object.middle_name|default_if_none:'' }}
+                </div>
+                <div class="col-md-4 col-12 mt-1">
+                    <label>Last Name:</label><br>
+                    {{ object.last_name }}
+                </div>
+                <div class="col-md-4 col-12 mt-1">
+                    <label>Date of Birth:</label><br>
+                    {{ object.birth_date}}
+                </div>
+                <div class="col-md-4 col-12 mt-1">
+                    <label>Phone Number:</label><br>
+                    {{ object.phone_number|phone_number }}
+                </div>
+                <div class="col-md-4 col-12 mt-1">
+                    <label>Email:</label><br>
+                    {{ object.email_info }}
+                </div>
+            </div><br>
+        <div><hr class="solid"></div>
+    <div class="row">
+        <div class="col-12">
+            <span class="display-4">
+                <h4>Patient Address</h4>
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-12">
+            <div class="row collapse show patient-info">
+                <div class="col-md-4 col-12 mt-1">
+                    <label>Street:</label><br>
+                    {{ object.street|default_if_none:'' }}
+                </div>
+                <div class="col-md-4 col-12 mt-1">
+                    <label>City:</label><br>
+                    {{ object.city|default_if_none:'' }}
+                </div>
+                <div class="col-md-4 col-12 mt-1">
+                    <label>State:</label><br>
+                    {{ object.state|default_if_none:'' }}
+                </div>
+                <div class="col-md-4 col-12 mt-1">
+                    <label>Zip:</label><br>
+                    {{ object.zip_code|default_if_none:''}}
+                </div>
+            </div><br>
     <a href="/patient_portal/detail/update"><button type="button" class="btn btn-primary">Update</button></a>
     <a href="{% url 'change_password' %}"><button type="button" class="btn btn-primary">Change Password</button></a>
 </div> 

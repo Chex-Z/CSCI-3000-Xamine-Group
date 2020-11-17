@@ -3,7 +3,8 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from xamine.models import Patient
+from xamine.models import Patient, Payment
+from .models import Insurance
 from django.core.exceptions import ValidationError
 
 # check emails in xamine.models.Patient
@@ -29,6 +30,18 @@ class RegisterForm(UserCreationForm):
         return data
 
 
+class InsuranceModelForm(forms.ModelForm):
+    class Meta:
+        model = Insurance
+        fields =[
+            'company_name',
+            'account_holder',
+            'group_number',
+            'account_number',
+            'contact_number',
+            'coverage',
+        ]
+
 class PatientModelForm(forms.ModelForm):
     class Meta:
         model = Patient
@@ -38,4 +51,17 @@ class PatientModelForm(forms.ModelForm):
             'middle_name',
             'last_name',
             'phone_number',
+            'street',
+            'city',
+            'state',
+            'zip_code',
+        ] 
+
+class PaymentForm(forms.ModelForm):
+    class Meta:
+        model = Payment
+        fields = [
+            'cc_number',
+            'cc_expiry',
+            'cc_code',
         ]

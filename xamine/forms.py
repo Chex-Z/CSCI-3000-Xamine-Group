@@ -116,10 +116,8 @@ class NewOrderForm(forms.ModelForm):
         }
 
 class NewInvoiceForm(forms.ModelForm):
-    """ Handles Creation """
+    """ Handles Creation of invoice """
 
     class Meta:
         model = Invoice
         fields = ['order', 'patient', 'total']
-
-        

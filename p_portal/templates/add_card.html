@@ -1,0 +1,15 @@
+{% extends 'p_base_no_nav.html' %}
+{% block title %}Add Card{% endblock %}
+{% load crispy_forms_tags %}
+{% block heading %}
+    <h1 class="mt-2">Add Card</h1>
+{% endblock %}
+
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  {{form|crispy}}
+  <input type='submit' value='Save' />
+  <a href="/patient_portal/patient_billing"><input type='button' value='Cancel' /></a>
+</form>
+{% endblock %}
