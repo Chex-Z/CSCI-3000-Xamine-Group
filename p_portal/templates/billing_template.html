@@ -30,7 +30,28 @@ Billing
                             {% endfor %}
                             </tbody>
                         </table><br>
-<a href="{% url 'add_card' %}"><button type="button" class="btn btn-primary">Add Credit Card</button></a>            
+    <span class="display-4">
+                    Paid Invoices
+                </span>
+                <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th>Order #</th>
+                                <th>Balance</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for invoice in paidinvoices %}
+                                <tr>
+                                    <td>{{ invoice.order.id }}</td>
+                                    <td>${{ invoice.total|floatformat:2 }}</td>
+                                   
+                                </tr>
+                            {% empty %}
+                            {% endfor %}
+                            </tbody>
+                        </table><br>
+<a href="{% url 'add_card' %}"><button type="button" class="btn btn-primary">Pay</button></a>            
 </div>
 
 {% endblock %}

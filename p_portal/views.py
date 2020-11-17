@@ -113,7 +113,10 @@ def patient_billing_view(request):
     context = {}
 
     current_invoices = p_invoice.filter(isPaid=False).order_by('order_id')
+    paid_invoices = p_invoice.filter(isPaid=True).order_by('order_id')
+
     context['invoices'] = current_invoices
+    context['paidinvoices'] = paid_invoices
     return render(request, "billing_template.html", context)
 
 #Register User as Patient
@@ -161,15 +164,24 @@ def change_password(request):
     })
 
 def add_card(request):
+    #pay an invoice 
     print("current user:" , request.user)
+    p_user=Patient.objects.get(patient_user=request.user)
+    p_invoice=Invoice.objects.filter(patient=p_user)
+    current_invoices = p_invoice.filter(isPaid=False).order_by('order_id')
+
     if request.method == 'POST':
-        form = PaymentForm(request.POST, instance = Payment(patient_user = request.user))
-        if form.is_valid():
-            form.save()
-            return redirect('/patient_portal/patient_billing')
+        invoice_number = Invoice.objects.get(pk=request.POST['dropdown1'])
+        invoice_number.isPaid = True
+        invoice_number.save()
+        return redirect('/patient_portal/patient_billing')
     else:
-        form = PaymentForm()  
-    return render(request, 'add_card.html', {'form':form})
+        form = PaymentForm()
+    context = {
+        'form':form,
+    }
+    context['invoices'] = current_invoices
+    return render(request, 'add_card.html',  context)
 
 def cancel_order(request, order_id):
     try:

@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from xamine.models import Patient, Payment
 from .models import Insurance
 from django.core.exceptions import ValidationError
+from creditcards.forms import CardNumberField, CardExpiryField, SecurityCodeField
 
 # check emails in xamine.models.Patient
 def is_patient(email):
@@ -57,11 +58,9 @@ class PatientModelForm(forms.ModelForm):
             'zip_code',
         ] 
 
-class PaymentForm(forms.ModelForm):
-    class Meta:
-        model = Payment
-        fields = [
-            'cc_number',
-            'cc_expiry',
-            'cc_code',
-        ]
+#paymentform
+class PaymentForm(forms.Form):
+    cc_number = CardNumberField(label='Card Number')
+    cc_expiry = CardExpiryField(label='Expiration Date')
+    cc_code = SecurityCodeField(label='CVV/CVC')
+    #amount = forms.IntegerField(label='Total')
