@@ -204,12 +204,21 @@ def change_password(request):
 def add_card(request):
     #pay an invoice 
     print("current user:" , request.user)
-    p_user=Patient.objects.get(patient_user=request.user)
-    p_invoice=Invoice.objects.filter(patient=p_user)
+    p_user = Patient.objects.get(patient_user=request.user)
+    p_invoice= Invoice.objects.filter(patient=p_user)
     current_invoices = p_invoice.filter(isPaid=False).order_by('order_id')
+    insurance_exists = Insurance.objects.filter(insurance_user=request.user).exists()
 
     if request.method == 'POST':
         invoice_number = Invoice.objects.get(pk=request.POST['dropdown1'])
+
+        if insurance_exists:
+            patient_insurance = Insurance.objects.get(insurance_user=request.user)
+            discount = patient_insurance.coverage
+            price = invoice_number.total
+            new_total = price * discount
+            invoice_number.total = new_total
+
         invoice_number.isPaid = True
         invoice_number.save()
         return redirect('/patient_portal/patient_billing')
