@@ -51,7 +51,9 @@ Billing
                             {% endfor %}
                             </tbody>
                         </table><br>
-<a href="{% url 'add_card' %}"><button type="button" class="btn btn-primary">Pay</button></a>            
+{% if invoices|length != 0  %}
+<a href="{% url 'add_card' %}"><button type="button" class="btn btn-primary">Pay</button></a>    
+{% endif %}                        
 </div>
 
 {% endblock %}
