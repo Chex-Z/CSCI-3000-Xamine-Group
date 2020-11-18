@@ -214,9 +214,9 @@ def add_card(request):
 
         if insurance_exists:
             patient_insurance = Insurance.objects.get(insurance_user=request.user)
-            discount = patient_insurance.coverage
+            compensation = patient_insurance.coverage
             price = invoice_number.total
-            new_total = price * discount
+            new_total = price * ((100-compensation)/100)
             invoice_number.total = new_total
 
         invoice_number.isPaid = True
