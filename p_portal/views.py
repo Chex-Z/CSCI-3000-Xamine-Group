@@ -207,6 +207,7 @@ def add_card(request):
     p_user=Patient.objects.get(patient_user=request.user)
     p_invoice=Invoice.objects.filter(patient=p_user)
     current_invoices = p_invoice.filter(isPaid=False).order_by('order_id')
+    insurance_exists = Insurance.objects.filter(insurance_user=request.user).exists()
 
     if request.method == 'POST':
         invoice_number = Invoice.objects.get(pk=request.POST['dropdown1'])
