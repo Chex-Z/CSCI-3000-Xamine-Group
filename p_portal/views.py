@@ -211,7 +211,8 @@ def add_card(request):
 
     if request.method == 'POST':
         invoice_number = Invoice.objects.get(pk=request.POST['dropdown1'])
-
+        
+        #if insurance exist, apply coverage
         if insurance_exists:
             patient_insurance = Insurance.objects.get(insurance_user=request.user)
             compensation = patient_insurance.coverage
