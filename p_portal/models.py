@@ -9,6 +9,6 @@ class Insurance(models.Model):
     account_number = models.CharField(max_length=32)
     contact_number = models.CharField(max_length=32)
     coverage = models.FloatField(default=0.0)
-    
+
     def __str__(self):
         return f"{self.company_name} ({self.id})"

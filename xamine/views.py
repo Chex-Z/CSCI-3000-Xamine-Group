@@ -125,12 +125,12 @@ def upload_file(request, order_id):
 
 @login_required
 def order(request, order_id):
+
     # Attempt to grab order via order_id from url. 404 if not found.
     try:
         cur_order = Order.objects.get(pk=order_id)
     except Order.DoesNotExist:
         raise Http404
-    print("current modality: ", cur_order.modality)
 
     # Check if we have a POST request
     if request.method == 'POST':
@@ -172,8 +172,15 @@ def order(request, order_id):
             if request.user in cur_order.team.radiologists.all():
                 # Set up data in our form and check validity of data.
                 # send invoice
+                price = 500
+                MRI = ModalityOption.objects.get(name = 'MRI')
+                CAT = ModalityOption.objects.get(name = 'CAT Scan')
+                XRay = ModalityOption.objects.get(name = 'X-Ray')
                 form = AnalysisForm(data=request.POST, instance=cur_order)
+                a = Invoice(order = cur_order, patient = cur_order.patient, total = price)
+
                 if form.is_valid():
+
                     # Save form, then grab saved item
                     form.save()
                     cur_order.refresh_from_db()
@@ -182,18 +189,8 @@ def order(request, order_id):
                     cur_order.completed = request.user.get_username()
                     cur_order.completed_time = timezone.now()
                     cur_order.save()
-                    
-                    if cur_order.modality == ModalityOption.objects.get(name='MRI'):
-                        price = 2611
-                       
-                    if cur_order.modality == ModalityOption.objects.get(name='CAT Scan'):
-                        price = 1200
-                       
-                    if cur_order.modality == ModalityOption.objects.get(name='X-Ray'):
-                        price = 460
-       
-                    a = Invoice(order = cur_order, patient = cur_order.patient, total = price)
-                    a.save()  
+                    a.save()
+    
                 else:
                     # Show form errors
                     messages = {

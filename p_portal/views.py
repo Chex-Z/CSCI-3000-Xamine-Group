@@ -204,13 +204,13 @@ def change_password(request):
 def add_card(request):
     #pay an invoice 
     print("current user:" , request.user)
-    p_user = Patient.objects.get(patient_user=request.user)
-    p_invoice= Invoice.objects.filter(patient=p_user)
+    p_user=Patient.objects.get(patient_user=request.user)
+    p_invoice=Invoice.objects.filter(patient=p_user)
     current_invoices = p_invoice.filter(isPaid=False).order_by('order_id')
-    insurance_exists = Insurance.objects.filter(insurance_user=request.user).exists()
 
     if request.method == 'POST':
         invoice_number = Invoice.objects.get(pk=request.POST['dropdown1'])
+<<<<<<< HEAD
         
         #if insurance exist, apply coverage
         if insurance_exists:
@@ -220,6 +220,8 @@ def add_card(request):
             new_total = price * ((100-compensation)/100)
             invoice_number.total = new_total
 
+=======
+>>>>>>> parent of 9f7a536... added insurance deduction, delete migrations
         invoice_number.isPaid = True
         invoice_number.save()
         return redirect('/patient_portal/patient_billing')
