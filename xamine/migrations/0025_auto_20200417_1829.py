@@ -18,7 +18,8 @@ def add_data_list(apps, schema_editor):
         'Physicians',
         'Radiologists',
         'Receptionists',
-        'Technicians'
+        'Technicians',
+        'Patient'
     ]
     add_data(apps, schema_editor, app='auth', model='Group', items=groups)
 
