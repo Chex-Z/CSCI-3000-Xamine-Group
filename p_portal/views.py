@@ -210,7 +210,6 @@ def add_card(request):
 
     if request.method == 'POST':
         invoice_number = Invoice.objects.get(pk=request.POST['dropdown1'])
-<<<<<<< HEAD
         
         #if insurance exist, apply coverage
         if insurance_exists:
@@ -220,8 +219,6 @@ def add_card(request):
             new_total = price * ((100-compensation)/100)
             invoice_number.total = new_total
 
-=======
->>>>>>> parent of 9f7a536... added insurance deduction, delete migrations
         invoice_number.isPaid = True
         invoice_number.save()
         return redirect('/patient_portal/patient_billing')
